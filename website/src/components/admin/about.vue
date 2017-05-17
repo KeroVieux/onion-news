@@ -17,9 +17,13 @@
         </QiniuUpload>
       </div>
       <div class="m-b-20"></div>
-      <Form :model="editingArticle" ref="editingForm" :label-width="80" :rules="editingRules">
+      <Form :model="editingAbout" ref="editingForm" :label-width="80" :rules="editingRules">
         <Form-item label="庙号" prop="title">
           <Input v-model="editingAbout.title" placeholder="请输入...">
+          </Input>
+        </Form-item>
+        <Form-item label="个人首页" prop="myPage">
+          <Input v-model="editingAbout.myPage" placeholder="请输入...">
           </Input>
         </Form-item>
         <Form-item label="简介" prop="summary">
@@ -60,6 +64,7 @@
         editingAbout: {
           summary: '',
           content: '',
+          myPage: '',
         },
         pageSize: 100,
         columns2: [
@@ -97,6 +102,7 @@
           content: '',
           summary: '',
           title: '',
+          myPage: '',
         }
       },
       uploadComplete(status, result) {
@@ -121,6 +127,7 @@
           modelAbout.save({
             picture: this.thumbnails,
             title: this.editingAbout.title,
+            myPage: this.editingAbout.myPage,
             summary: this.editingAbout.summary,
             content: this.editingAbout.content,
             createdBy: AV.Object.createWithoutData('_User', user.objectId),
@@ -150,6 +157,8 @@
           const modelAbout = this.modelAbout()
           modelAbout.save({
             picture: this.thumbnails,
+            title: this.editingAbout.title,
+            myPage: this.editingAbout.myPage,
             summary: this.editingAbout.summary,
             content: this.editingAbout.content,
             createdBy: AV.Object.createWithoutData('_User', user.objectId),

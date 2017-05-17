@@ -76,7 +76,7 @@
           return item.toJSON()
         })
       })
-      posts.equalTo('createdBy', createdBy).descending('updatedAt').limit(5)
+      posts.equalTo('createdBy', createdBy).notEqualTo('onTop', 1).descending('updatedAt').limit(5)
       .find()
       .then((res) => {
         this.posts = _.map(res, (item) => {

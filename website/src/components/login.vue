@@ -6,20 +6,22 @@
       <Spin fix></Spin>
     </div>
     <div v-else>
-      <Form :model="loginInputs" ref="loginForm" :rules="loginRules" :label-width="80">
-        <Form-item label="用户名" prop="username">
-          <Input v-model="loginInputs.username" placeholder="请输入">
-          </Input>
-        </Form-item>
-        <Form-item label="密码" prop="password">
-          <Input v-model="loginInputs.password" placeholder="请输入" type="password">
-          </Input>
-        </Form-item>
-        <Form-item>
-          <Button type="primary" @click="handleSubmit('loginForm')">提交</Button>
-          <Button type="ghost" style="margin-left: 8px" @click="handleReset('loginForm')">取消</Button>
-        </Form-item>
-      </Form>
+      <Card>
+        <Form :model="loginInputs" ref="loginForm" :rules="loginRules" :label-width="80">
+          <Form-item label="用户名" prop="username">
+            <Input v-model="loginInputs.username" placeholder="请输入">
+            </Input>
+          </Form-item>
+          <Form-item label="密码" prop="password">
+            <Input v-model="loginInputs.password" placeholder="请输入" type="password">
+            </Input>
+          </Form-item>
+          <Form-item>
+            <Button type="primary" @click="handleSubmit('loginForm')">提交</Button>
+            <Button type="ghost" style="margin-left: 8px" @click="handleReset('loginForm')">取消</Button>
+          </Form-item>
+        </Form>
+      </Card>
     </div>
     </Col>
   </Row>

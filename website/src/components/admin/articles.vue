@@ -29,8 +29,8 @@
           </Input>
         </Form-item>
         <Form-item label="类目" prop="select">
-          <Select v-model="editingArticle.categoryId" style="width:200px">
-            <Option v-for="item in categoryList" :value="item.objectId" :key="item">{{ item.title }}
+          <Select v-model="editingArticle.categoryId">
+            <Option v-for="item in categoryList" :value="item.objectId" :key="item.objectId">{{ item.title }}
             </Option>
           </Select>
         </Form-item>
@@ -38,12 +38,12 @@
           <Input v-model="editingArticle.title" placeholder="请输入...">
           </Input>
         </Form-item>
-        <Form-item label="备注" prop="remark">
-          <Input v-model="editingArticle.remark" placeholder="请输入..." type="textarea" :rows="4">
-          </Input>
-        </Form-item>
         <Form-item label="摘要" prop="summary">
           <Input v-model="editingArticle.summary" placeholder="请输入..." type="textarea" :rows="4">
+          </Input>
+        </Form-item>
+        <Form-item label="备注">
+          <Input v-model="editingArticle.remark" placeholder="请输入..." type="textarea" :rows="4">
           </Input>
         </Form-item>
         <h3 class="c-g9 m-b-5 p-l-5">内容</h3>
@@ -157,6 +157,7 @@
         this.editingArticle = {
           content: '',
           status: '1',
+          onTop: '0',
           title: '',
           category: '',
           remark: '',
@@ -174,7 +175,7 @@
         this.editing = true
         this.editingArticle = this.posts[index]
         this.thumbnails = this.posts[index].pic
-        console.log('this.thumbnails ', this.thumbnails)
+        console.log('this', this.posts[index])
       },
       handleSubmit(name) {
         this.htmlOverFlowAuto()

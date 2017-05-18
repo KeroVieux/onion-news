@@ -25,7 +25,7 @@
       <div v-if="posts && posts.length">
         <Card class="m-b-15" v-for="post in posts" v-if="post.status === 1" :key="post.objectId">
           <p slot="title"><router-link :to="`/articles/content/${post.objectId}`" class="c-g6">{{post.title}}</router-link></p>
-          <p class="ti2" v-if="post.summary">{{post.summary | truncate(30)}}</p>
+          <p class="ti2" v-if="post.summary">{{post.summary | truncate(80)}}</p>
           <p v-else>没有摘要...</p>
           <div class="tr">
             <router-link :to="`/articles/content/${post.objectId}`">阅读全文 <i class="fa fa-angle-right"></i></router-link>

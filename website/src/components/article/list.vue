@@ -33,7 +33,7 @@
         count: null,
         posts: null,
         categoryId: null,
-        pageSize: 2,
+        pageSize: 10,
       }
     },
     methods: {

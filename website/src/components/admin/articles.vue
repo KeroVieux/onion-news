@@ -77,10 +77,8 @@
         editingArticle: {},
         thumbnails: [],
         editingRules: {
-          remark: { required: true, max: 80, message: '必填，且最多80个文字', trigger: 'blur' },
-          summary: { required: true, max: 80, message: '必填，且最多80个文字', trigger: 'blur' },
+          summary: { required: true, max: 300, message: '必填，且最多300个文字', trigger: 'blur' },
           title: { required: true, max: 80, message: '必填，且最多80个文字', trigger: 'blur' },
-          content: { required: true, max: 500, message: '必填，且最多500个文字', trigger: 'blur' },
         },
         posts: [],
         categoryList: [],
@@ -174,6 +172,7 @@
         this.htmlOverFlowHidden()
         this.editing = true
         this.editingArticle = this.posts[index]
+        this.editingArticle.categoryId = this.editingArticle.category.objectId
         this.thumbnails = this.posts[index].pic
         console.log('this', this.posts[index])
       },

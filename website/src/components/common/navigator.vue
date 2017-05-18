@@ -2,10 +2,10 @@
   <div class="navigator_bar pos-rel">
     <div class="container">
       <ul class="m-0 p-0">
-        <li class="dib"><router-link to="/" class="c-white fz-16 p-l-20 p-r-20">主页</router-link></li>
-        <li class="dib"><router-link to="/articles/list/all" class="c-white fz-16 p-l-20 p-r-20">文章</router-link></li>
-        <li class="dib"><router-link to="/articles/list/591bb201da2f60005d0d5190" class="c-white fz-16 p-l-20 p-r-20">案例</router-link></li>
-        <li class="dib"><router-link to="/about" class="c-white fz-16 p-l-20 p-r-20">关于我</router-link></li>
+        <li class="dib"><router-link to="/" class="c-white fz-16 p-l-15 p-r-15">主页</router-link></li>
+        <li class="dib"><router-link to="/articles/list/all" class="c-white fz-16 p-l-15 p-r-15">文章</router-link></li>
+        <li class="dib"><router-link to="/articles/list/591bb201da2f60005d0d5190" class="c-white fz-16 p-l-15 p-r-15">案例</router-link></li>
+        <li class="dib"><router-link to="/about" class="c-white fz-16 p-l-15 p-r-15">关于我</router-link></li>
       </ul>
     </div>
   </div>

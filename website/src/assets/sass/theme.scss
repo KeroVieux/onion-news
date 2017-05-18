@@ -39,7 +39,14 @@
   clip-path: polygon(0 0px, 100% 100px, 100% 100%, 0px 100%);
   padding: 100px 0 30px;
 }
-
+.markdown-body{
+  li{
+    list-style: inherit;
+  }
+  ol{
+    list-style: decimal;
+  }
+}
 @keyframes colorrr {
   0% {
     filter: hue-rotate(0deg)

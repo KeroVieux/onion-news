@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-t-20">
+  <div class="container p-t-20 p-b-20">
     <div class="bg-white rounded box_shadow overflow-hidden">
       <Row>
         <Col :xs="24" :sm="8" :md="4" :lg="4">

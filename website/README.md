@@ -1,30 +1,13 @@
-# vue-cli-281
+# onion-news webapp
 
-> A Vue.js project
+> It's a demo for cms , via this demo you could learnt how to do a news / blog / ued webapp working well in pc/table/phone
 
-## Build Setup
+## feature
+1. eslint base on airbnb , any confuse click here [http://eslint.org/](http://eslint.org/)
+2. vue-router / vuex has been integrated
+3. UI , check here [https://www.iviewui.com](https://www.iviewui.com)
+4. using scss
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## start
+1. yarn install
+2. npm run dev / build

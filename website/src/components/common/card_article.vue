@@ -4,7 +4,7 @@
       <h3><router-link :to="`/articles/content/${post.objectId}`" class="c-g6">{{post.title}}</router-link></h3>
       <p><small>{{post.createdAt | dateFormat('L')}}</small></p>
       <div class="p-t-15">
-        <p class="ti2">{{post.summary | truncate(30)}}</p>
+        <p class="ti2">{{post.summary | truncate(80)}}</p>
       </div>
       <div class="tr">
         <router-link :to="`/articles/content/${post.objectId}`">阅读全文 <i class="fa fa-angle-right"></i></router-link>

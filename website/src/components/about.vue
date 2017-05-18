@@ -17,7 +17,7 @@
         </Col>
         <Col :xs="24" :sm="16" :md="18" :lg="18">
         <Card>
-          <div v-if="data && data.content">
+          <div v-if="data && data.content" class="markdown-body">
             <div v-html="data.content"></div>
           </div>
         </Card>

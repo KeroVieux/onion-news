@@ -3,7 +3,7 @@
     <div class="ivu-article" v-if="post">
       <h2>{{post.title}}</h2>
       <p><small>{{post.createdAt | dateFormat('L')}}</small></p>
-      <div class="p-t-15">
+      <div class="p-t-15 content_area">
         <div v-html="post.content"></div>
       </div>
       <div class="p-t-30 p-b-30">

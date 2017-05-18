@@ -24,7 +24,7 @@
       </Card>
       <div class="copy">
         <div class="p-t-15 p-b-15 tc c-bluegray">
-          <router-link to="/signup" class="c-bluegray">Join !</router-link>
+          <router-link to="/login" class="c-bluegray">login !</router-link>
         </div>
       </div>
     </div>
@@ -54,13 +54,12 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.ing = true
-            this.logIn(this.loginInputs.username, this.loginInputs.password)
-            .then((currentUser) => {
-              this.$store.dispatch('currentUserInfo', currentUser.toJSON()).then(() => {
-                this.$Message.success('提交成功!')
-                this.ing = false
-                this.$router.push('/admin/articles')
-              })
+            const user = new AV.User()
+            user.setUsername(this.loginInputs.username)
+            user.setPassword(this.loginInputs.password)
+            user.signUp().then(() => {
+              this.$Message.info('注册成功')
+              this.$router.push('/admin/articles')
             }).catch((error) => {
               this.ing = false
               console.log('error', error)

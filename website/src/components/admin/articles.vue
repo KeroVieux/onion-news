@@ -8,11 +8,13 @@
       title="编辑">
       <div class="fix p-l-10 p-r-10">
         <div class="upload-preview tc m-b-20 l">
-          <figure>
-            <img :src="`${thumbnail}?imageView2/1/w/100/h/100/interlace/0/q/100`"
-                 class="rounded bd-blue m-r-5"
-                 v-for="thumbnail in thumbnails"/>
-          </figure>
+          <div class="fix">
+            <figure v-for="(thumbnail, index) in thumbnails" class="l pos-rel">
+              <img :src="`${thumbnail}?imageView2/1/w/100/h/100/interlace/0/q/100`"
+                   class="rounded bd-blue m-r-5"/>
+              <Icon type="close-circled" @click="deleteFile(index)" class="btn_remove c-red fz-18"></Icon>
+            </figure>
+          </div>
         </div>
         <QiniuUpload :multiple="true" @complete="uploadComplete" ref="qiniuUpload" class="l">
           <a></a>
@@ -145,6 +147,9 @@
       }
     },
     methods: {
+      deleteFile(index) {
+        this.thumbnails.splice(index, 1)
+      },
       changePage(page) {
         console.log(page)
       },

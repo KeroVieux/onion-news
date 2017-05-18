@@ -2,7 +2,7 @@
   <div>
     <Face></Face>
     <div class="container">
-      <h2 class="tc m-b-25"><i class="fa fa-trophy"></i> Top</h2>
+      <h2 class="tc m-b-25"><Icon type="fireball" class="c-red"></Icon> Top</h2>
       <div v-if="tops && tops.length">
         <Card class="m-b-15" v-for="item in tops" v-if="item.status === 1" :key="item.objectId">
           <p slot="title"><router-link :to="`/articles/content/${item.objectId}`" class="c-g6">{{item.title}}</router-link></p>

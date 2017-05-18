@@ -4,7 +4,7 @@
       v-model="editing"
       :loading="saving"
       title="编辑留言">
-      <div class="upload-preview tc m-b-20" v-if="thumbnail">
+      <div class="upload-preview tc m-b-20 pos-rel" v-if="thumbnail">
         <figure>
           <img :src="`${thumbnail}?imageView2/1/w/100/h/100/interlace/0/q/100`" class="rounded bd-blue"/>
         </figure>

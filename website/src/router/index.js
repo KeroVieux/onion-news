@@ -19,6 +19,13 @@ export default new Router({
       },
     },
     {
+      path: '/signup',
+      name: 'signUp',
+      component(resolve) {
+        require(['@/components/signup'], resolve)
+      },
+    },
+    {
       path: '/about',
       name: 'About',
       component(resolve) {

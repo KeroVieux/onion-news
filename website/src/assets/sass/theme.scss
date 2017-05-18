@@ -47,6 +47,12 @@
     list-style: decimal;
   }
 }
+.btn_remove{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+}
 @keyframes colorrr {
   0% {
     filter: hue-rotate(0deg)

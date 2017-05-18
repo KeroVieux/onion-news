@@ -1,16 +1,14 @@
 <template>
   <div class="container p-20">
     <div class="bg-white rounded box_shadow overflow-hidden">
-      <div class="p-20">
-        <Button type="primary" @click="loginAdmin">管理员登录</Button>
-        <Button type="error" @click="handleLogOut">注销</Button>
-        <Button type="primary" @click="showCurrentUser">查看当前用户</Button>
-        <Button type="primary" @click="addPosts">添加一篇文章</Button>
-        <Button type="primary" @click="getPosts">查询文章</Button>
-      </div>
       <div class="p-20 dn">
+        <Button type="primary" @click="showCurrentUser">当前用户</Button>
+        <Button type="error" @click="handleLogOut">注销</Button>
         <Button type="primary" @click="signIn">注册</Button>
         <Button type="error" @click="addToGroup">当前用户加入管理组</Button>
+        <Button type="primary" @click="addPosts">添加一篇文章</Button>
+        <Button type="primary" @click="getPosts">查询文章</Button>
+        <Button type="primary" @click="loginAdmin">管理员登录</Button>
       </div>
       <Row>
         <Col :xs="24" :sm="8" :md="4" :lg="4">
@@ -31,6 +29,14 @@
             <Menu-item name="4" @click.native="goToLink(`/admin/about`)">
               <Icon type="document-text"></Icon>
               关于我
+            </Menu-item>
+            <Menu-item name="5" @click.native="showCurrentUser">
+              <Icon type="document-text"></Icon>
+              当前用户
+            </Menu-item>
+            <Menu-item name="6" @click.native="handleLogOut">
+              <Icon type="document-text"></Icon>
+              注销
             </Menu-item>
           </Menu-group>
         </Menu>

@@ -12,7 +12,7 @@
             <figure v-for="(thumbnail, index) in thumbnails" class="l pos-rel">
               <img :src="`${thumbnail}?imageView2/1/w/100/h/100/interlace/0/q/100`"
                    class="rounded bd-blue m-r-5"/>
-              <Icon type="close-circled" @click="deleteFile(index)" class="btn_remove c-red fz-18"></Icon>
+              <Icon type="close-circled" @click.native="deleteFile(index)" class="btn_remove c-red fz-18"></Icon>
             </figure>
           </div>
         </div>
@@ -104,29 +104,12 @@
             title: '标题',
             key: 'title',
             width: 250,
-              /* filters: [
-               {
-               label: '大于25岁',
-               value: 1
-               },
-               {
-               label: '小于25岁',
-               value: 2
-               },
-               ],
-               filterMultiple: false,
-               filterMethod(value, row) {
-               if (value === 1) {
-               return row.title === '设计'
-               } else if (value === 2) {
-               return row.title === '摄影'
-               }
-               },*/
           },
           {
             title: '作者',
             key: 'createdByName',
             width: 150,
+            sortable: true,
           },
           {
             title: '最后更新',
@@ -151,7 +134,29 @@
         this.thumbnails.splice(index, 1)
       },
       changePage(page) {
-        console.log(page)
+        const posts = this.queryPosts()
+        const user = this.currentUser()
+        if (user.username !== 'admin') {
+          const createdBy = AV.Object.createWithoutData('_User', user.objectId)
+          posts.equalTo('createdBy', createdBy)
+        }
+        const currentPageSize = page * this.pageSize
+        posts.include(['category', 'createdBy']).descending('createdAt').limit(this.pageSize).skip(currentPageSize - this.pageSize)
+          .find()
+          .then((res) => {
+            this.posts = _.map(res, (item) => {
+              const obj = item.toJSON()
+              obj.createdByName = obj.createdBy ? item.get('createdBy').toJSON().username : '无'
+              obj.categoryTitle = obj.category ? item.get('category').toJSON().title : '无'
+              obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
+              obj.categoryId = obj.category.objectId
+              return obj
+            })
+          })
+          .catch((err) => {
+            console.log('err', err)
+            this.$Message.error('出错啦')
+          })
       },
       add() {
         this.htmlOverFlowHidden()
@@ -164,6 +169,7 @@
           title: '',
           category: '',
           remark: '',
+          categoryId: this.categoryList[0].objectId,
         }
       },
       uploadComplete(status, result) {
@@ -179,7 +185,6 @@
         this.editingArticle = this.posts[index]
         this.editingArticle.categoryId = this.editingArticle.category.objectId
         this.thumbnails = this.posts[index].pic
-        console.log('this', this.posts[index])
       },
       handleSubmit(name) {
         this.htmlOverFlowAuto()
@@ -204,7 +209,6 @@
                 const post = this.queryPosts()
                 post.include(['category', 'createdBy']).get(res.id).then((getRes) => {
                   const obj = getRes.toJSON()
-                  console.log('修改', obj)
                   this.$Message.success('操作成功')
                   this.editing = false
                   this.saving = false
@@ -240,7 +244,6 @@
                 console.log(res.id)
                 post.include(['category', 'createdBy']).get(res.id).then((getRes) => {
                   const obj = getRes.toJSON()
-                  console.log('新增', obj)
                   this.editing = false
                   this.saving = false
                   obj.createdByName = obj.createdBy ? getRes.get('createdBy').toJSON().username : '无'
@@ -263,9 +266,16 @@
     created() {
       this.posts = []
       const posts = this.queryPosts()
+      const user = this.currentUser()
+      if (user.username !== 'admin') {
+        const createdBy = AV.Object.createWithoutData('_User', user.objectId)
+        posts.equalTo('createdBy', createdBy)
+      }
       posts.count().then((res) => {
         this.count = res
-        console.log('this.count', this.count)
+      }).catch((err) => {
+        console.log('err', err)
+        this.$Message.error('出错啦')
       })
       posts.include(['category', 'createdBy']).descending('createdAt').limit(this.pageSize).find()
         .then((res) => {
@@ -275,12 +285,12 @@
             obj.categoryTitle = obj.category ? item.get('category').toJSON().title : '无'
             obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
             obj.categoryId = obj.category.objectId
-            console.log('id', obj.category.objectId)
             return obj
           })
         })
         .catch((err) => {
           console.log('err', err)
+          this.$Message.error('出错啦')
         })
       const category = this.queryCategory()
       category.find().then((res) => {
@@ -289,6 +299,9 @@
           obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
           return obj
         })
+      }).catch((err) => {
+        console.log('err', err)
+        this.$Message.error('出错啦')
       })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],

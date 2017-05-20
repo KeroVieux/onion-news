@@ -7,13 +7,29 @@
     li{
       padding-top: 10px;
       line-height: 30px;
+      a{
+        &:hover{
+          color: #fff;
+          opacity: .75;
+        }
+      }
     }
   }
-  a{
-    &:hover{
-      color: #fff;
-      opacity: .75;
-    }
+  .ivu-input-wrapper{
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px inset;
+    background-color: rgba(0, 20, 0, 0.1)
+  }
+  .ivu-input{
+    border-right: none;
+  }
+  .ivu-input-group-append{
+    border-left: none;
+  }
+  .ivu-input,.ivu-input-group-append{
+    border-color: rgba(0, 40, 0, 0.1);
+    background: none;
+    color: #fff;
   }
 }
 .face_area{

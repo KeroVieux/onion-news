@@ -63,7 +63,7 @@
             }).catch((error) => {
               this.ing = false
               console.log('error', error)
-              this.$Message.error(error)
+              this.$Message.error('出错啦')
             })
           } else {
             this.$Message.error('表单验证失败!')

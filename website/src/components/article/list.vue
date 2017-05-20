@@ -38,69 +38,103 @@
     },
     methods: {
       addMorePosts() {
+        this.$Loading.start()
         const posts = this.queryPosts()
         const createdBy = AV.Object.createWithoutData('_User', currentEnv.belongTo)
         const skip = this.posts.length || 0
         if (this.categoryId === 'all') {
           posts.equalTo('createdBy', createdBy).descending('updatedAt').limit(this.pageSize).skip(skip)
-          .find()
-          .then((res) => {
-            const finalRes = _.map(res, (item) => {
-              const obj = item.toJSON()
-              obj.categoryObj = item.get('category').toJSON()
-              return obj
+            .find()
+            .then((res) => {
+              const finalRes = _.map(res, (item) => {
+                const obj = item.toJSON()
+                obj.categoryObj = item.get('category').toJSON()
+                return obj
+              })
+              this.posts = this.posts.concat(finalRes)
+              this.$Loading.finish()
             })
-            this.posts = this.posts.concat(finalRes)
-          })
+            .catch((err) => {
+              console.log('err', err)
+              this.$Loading.error()
+              this.$Message.error('出错啦')
+            })
         } else {
           const category = AV.Object.createWithoutData('Category', this.categoryId)
           posts.equalTo('category', category)
-          .equalTo('createdBy', createdBy)
-          .descending('updatedAt')
-          .limit(this.pageSize)
-          .skip(skip)
-          .find()
-          .then((res) => {
-            const finalRes = _.map(res, (item) => {
-              const obj = item.toJSON()
-              obj.categoryObj = item.get('category').toJSON()
-              return obj
+            .equalTo('createdBy', createdBy)
+            .descending('updatedAt')
+            .limit(this.pageSize)
+            .skip(skip)
+            .find()
+            .then((res) => {
+              this.$Loading.finish()
+              const finalRes = _.map(res, (item) => {
+                const obj = item.toJSON()
+                obj.categoryObj = item.get('category').toJSON()
+                return obj
+              })
+              this.posts = this.posts.concat(finalRes)
             })
-            this.posts = this.posts.concat(finalRes)
-          })
+            .catch((err) => {
+              console.log('err', err)
+              this.$Loading.error()
+              this.$Message.error('出错啦')
+            })
         }
       },
       setUpPosts() {
+        this.$Loading.start()
         this.categoryId = this.$route.params.categoryId
         this.posts = null
         const posts = this.queryPosts()
         const createdBy = AV.Object.createWithoutData('_User', currentEnv.belongTo)
         if (this.categoryId === 'all') {
           posts.equalTo('createdBy', createdBy).descending('updatedAt').limit(this.pageSize).find()
-          .then((res) => {
-            this.posts = _.map(res, (item) => {
-              return item.toJSON()
+            .then((res) => {
+              this.posts = _.map(res, (item) => {
+                return item.toJSON()
+              })
+              this.$Loading.finish()
             })
-          })
+            .catch((err) => {
+              console.log('err', err)
+              this.$Loading.error()
+              this.$Message.error('出错啦')
+            })
           posts.count().then((res) => {
             this.count = res
+          }).catch((err) => {
+            console.log('err', err)
+            this.$Loading.error()
+            this.$Message.error('出错啦')
           })
         } else {
           const category = AV.Object.createWithoutData('Category', this.categoryId)
           posts.equalTo('category', category)
-          .equalTo('createdBy', createdBy)
-          .descending('updatedAt')
-          .limit(this.pageSize)
-          .find()
-          .then((res) => {
-            this.posts = _.map(res, (item) => {
-              const obj = item.toJSON()
-              obj.categoryObj = item.get('category').toJSON()
-              return obj
+            .equalTo('createdBy', createdBy)
+            .descending('updatedAt')
+            .limit(this.pageSize)
+            .find()
+            .then((res) => {
+              this.posts = _.map(res, (item) => {
+                const obj = item.toJSON()
+                obj.categoryObj = item.get('category').toJSON()
+                return obj
+              })
+              this.$Loading.finish()
             })
-          })
+            .catch((err) => {
+              console.log('err', err)
+              this.$Loading.error()
+              this.$Message.error('出错啦')
+            })
           posts.count().then((res) => {
             this.count = res
+          }).catch((err) => {
+            console.log('err', err)
+            this.$Loading.error()
+            this.$Message.error('出错啦')
           })
         }
       },

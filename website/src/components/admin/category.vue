@@ -36,6 +36,7 @@
   export default{
     data() {
       return {
+        pageSize: 100,
         categoryList: [],
         categoryId: null,
         editing: false,
@@ -108,7 +109,6 @@
                 createdBy: AV.Object.createWithoutData('_User', user.objectId),
               }).then((res) => {
                 const obj = res.toJSON()
-                console.log('修改', obj)
                 this.$Message.success('操作成功')
                 this.editing = false
                 this.saving = false
@@ -133,7 +133,6 @@
                 createdBy: AV.Object.createWithoutData('_User', user.objectId),
               }).then((res) => {
                 const obj = res.toJSON()
-                console.log('新增', obj)
                 this.editing = false
                 this.saving = false
                 obj.formatStatus = this.formatStatus(_.toString(obj.status))
@@ -151,26 +150,18 @@
         })
       },
     },
-    computed: {
-      categoryData() {
-        return this.$store.getters.categoryData || null
-      },
-      postsData() {
-        return this.$store.getters.postsData || null
-      },
-      currentUserInfo() {
-        return this.$store.getters.currentUserInfo || null
-      },
-    },
     created() {
       const category = this.queryCategory()
-      category.find().then((res) => {
+      category.limit(this.pageSize).find().then((res) => {
         this.categoryList = _.map(res, (item) => {
           const obj = item.toJSON()
           obj.formatStatus = this.formatStatus(_.toString(obj.status))
           obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
           return obj
         })
+      }).catch((err) => {
+        console.log('err', err)
+        this.$Message.error('出错啦')
       })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],

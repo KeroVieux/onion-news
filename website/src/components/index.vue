@@ -6,7 +6,7 @@
       <div v-if="tops && tops.length">
         <Card class="m-b-15" v-for="item in tops" v-if="item.status === 1" :key="item.objectId">
           <p slot="title"><router-link :to="`/articles/content/${item.objectId}`" class="c-g6">{{item.title}}</router-link></p>
-          <p class="ti2" v-if="item.summary">{{item.summary | truncate(30)}}</p>
+          <p class="ti2" v-if="item.summary">{{item.summary | truncate(80)}}</p>
           <p v-else>没有摘要...</p>
           <div class="tr">
             <router-link :to="`/articles/content/${item.objectId}`">阅读全文 <i class="fa fa-angle-right"></i></router-link>
@@ -70,19 +70,27 @@
       const tops = this.queryPosts()
       const createdBy = AV.Object.createWithoutData('_User', currentEnv.belongTo)
       tops.equalTo('createdBy', createdBy).equalTo('onTop', 1).descending('updatedAt').limit(5)
-      .find()
-      .then((res) => {
-        this.tops = _.map(res, (item) => {
-          return item.toJSON()
+        .find()
+        .then((res) => {
+          this.tops = _.map(res, (item) => {
+            return item.toJSON()
+          })
         })
-      })
+        .catch((err) => {
+          console.log('err', err)
+          this.$Message.error('出错啦')
+        })
       posts.equalTo('createdBy', createdBy).notEqualTo('onTop', 1).descending('updatedAt').limit(5)
-      .find()
-      .then((res) => {
-        this.posts = _.map(res, (item) => {
-          return item.toJSON()
+        .find()
+        .then((res) => {
+          this.posts = _.map(res, (item) => {
+            return item.toJSON()
+          })
         })
-      })
+        .catch((err) => {
+          console.log('err', err)
+          this.$Message.error('出错啦')
+        })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],
   }

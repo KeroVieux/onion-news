@@ -41,6 +41,9 @@
         this.navList = _.map(res, (item) => {
           return item.toJSON()
         })
+      }).catch((err) => {
+        console.log('err', err)
+        this.$Message.error('出错啦')
       })
     },
     mixins: [FnMixins, ModelMixins],

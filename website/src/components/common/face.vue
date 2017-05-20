@@ -3,9 +3,13 @@
     <div class="container tc">
       <div class="p-t-20"></div>
       <div class="p-t-30"></div>
-      <img :src="`${aboutData.picture}?imageView2/1/w/80/h/80/q/75`" alt="" class="doge" v-if="aboutData && aboutData.picture">
+      <transition
+        name="bounce"
+      >
+        <img :src="`${aboutData.picture}?imageView2/1/w/80/h/80/q/75`" alt="" class="doge" v-if="aboutData && aboutData.picture">
+      </transition>
       <div class="p-t-30"></div>
-      <h1 class="c-white n i fz-34">{{aboutData.title}}</h1>
+      <h1 class="c-white n i fz-34" v-if="aboutData && aboutData.title">{{aboutData.title}}</h1>
       <div class="p-b-20"></div>
       <p class="c-white fz-18" v-if="aboutData && aboutData.summary">{{aboutData.summary}}</p>
       <div class="p-b-30"></div>
@@ -36,9 +40,14 @@
     created() {
       const createdBy = AV.Object.createWithoutData('_User', currentEnv.belongTo)
       const about = this.queryAbout()
-      about.equalTo('createdBy', createdBy).descending('updatedAt').find().then((res) => {
-        this.aboutData = res[0].toJSON()
-      })
+      about.equalTo('createdBy', createdBy).descending('updatedAt').find()
+        .then((res) => {
+          this.aboutData = res[0].toJSON()
+        })
+        .catch((err) => {
+          console.log('err', err)
+          this.$Message.error('出错啦')
+        })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],
   }

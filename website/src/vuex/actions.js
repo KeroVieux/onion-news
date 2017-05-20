@@ -8,19 +8,7 @@ export default {
    * @param {object} newSet
    * @example store.dispatch('temporaryData',object)
    */
-  currentUserInfo({ commit }, newSet) {
-    commit('currentUserInfo', newSet)
-  },
   temporaryData({ commit }, newSet) {
     commit('temporaryData', newSet)
-  },
-  allChartData({ commit }, newSet) {
-    commit('allChartData', newSet)
-  },
-  categoryData({ commit }, newSet) {
-    commit('categoryData', newSet)
-  },
-  postsData({ commit }, newSet) {
-    commit('postsData', newSet)
   },
 }

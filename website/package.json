@@ -24,6 +24,7 @@
     "showdown": "^1.6.4",
     "vue": "^2.3.2",
     "vue-echarts-v3": "^1.0.4",
+    "vue-images": "^1.0.9",
     "vue-router": "^2.3.1",
     "vue-simplemde": "^0.3.8",
     "vue2-animate": "^1.0.4",

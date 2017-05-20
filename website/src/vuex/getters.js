@@ -8,9 +8,5 @@ export default {
    * @example let state = store.getters.temporaryData
    */
   temporaryData: (state) => { return state.temporaryData },
-  currentUserInfo: (state) => { return state.currentUserInfo },
-  allChartData: (state) => { return state.allChartData },
-  categoryData: (state) => { return state.categoryData },
-  postsData: (state) => { return state.postsData },
 
 }

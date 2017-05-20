@@ -33,6 +33,13 @@ export default new Router({
       },
     },
     {
+      path: '/result',
+      name: 'Result',
+      component(resolve) {
+        require(['@/components/result'], resolve)
+      },
+    },
+    {
       path: '/articles',
       component(resolve) {
         require(['@/components/article/index'], resolve)

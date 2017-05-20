@@ -10,7 +10,7 @@
           <i class="fa fa-plus-circle fa-4x c-blue"></i>
         </div>
         <em>选择图片</em>
-        <input type="file" :accept="accepts" @change="upload" :multiple="multiple">
+        <input id="files" type="file" :accept="accepts" @change="upload" :multiple="multiple">
         <slot></slot>
       </div>
     </label>
@@ -49,8 +49,8 @@
           this.ing = true
           this.genToken().then((token) => {
             this.token = token
-            const formData = new FormData()
             _(file).forEach((item) => {
+              const formData = new FormData()
               formData.append('file', item)
               formData.append('token', this.token)
               axios.post('http://upload.qiniu.com/', formData).then((response) => {
@@ -65,6 +65,9 @@
                   this.$emit('complete', 500, result)
                   this.$Message.error('出错了!')
                 }
+              }).catch((err) => {
+                console.log('err', err)
+                this.$Message.error('出错啦')
               })
             })
           }).catch((nothing, err) => {

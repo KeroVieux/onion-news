@@ -47,10 +47,15 @@
     created() {
       const about = this.queryAbout()
       const createdBy = AV.Object.createWithoutData('_User', currentEnv.belongTo)
-      about.equalTo('createdBy', createdBy).descending('updatedAt').find().then((res) => {
-        this.data = res[0].toJSON()
-        this.data.content = converter.makeHtml(this.data.content)
-      })
+      about.equalTo('createdBy', createdBy).descending('updatedAt').find()
+        .then((res) => {
+          this.data = res[0].toJSON()
+          this.data.content = converter.makeHtml(this.data.content)
+        })
+        .catch((err) => {
+          console.log('err', err)
+          this.$Message.error('出错啦')
+        })
     },
     mixins: [FnMixins, ModelMixins],
   }

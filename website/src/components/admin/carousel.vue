@@ -55,6 +55,7 @@
     },
     data() {
       return {
+        pageSize: 100,
         thumbnail: '',
         carouselList: [],
         posts: [],
@@ -90,6 +91,7 @@
             title: '作者',
             key: 'createdByName',
             width: 100,
+            sortable: true,
           },
           {
             title: '状态',
@@ -156,7 +158,6 @@
                 const carousel = this.queryCarousel()
                 carousel.include(['createdBy']).get(res.id).then((getRes) => {
                   const obj = getRes.toJSON()
-                  console.log('修改', obj)
                   this.$Message.success('操作成功')
                   this.editing = false
                   this.saving = false
@@ -186,7 +187,6 @@
                 const carousel = this.queryCarousel()
                 carousel.include(['createdBy']).get(res.id).then((getRes) => {
                   const obj = getRes.toJSON()
-                  console.log('修改', obj)
                   this.editing = false
                   this.saving = false
                   obj.createdByName = obj.createdBy ? getRes.get('createdBy').toJSON().username : '无'
@@ -207,14 +207,24 @@
     },
     created() {
       const carousel = this.queryCarousel()
-      carousel.include(['createdBy']).find().then((res) => {
-        this.carouselList = _.map(res, (item) => {
-          const obj = item.toJSON()
-          obj.createdByName = obj.createdBy ? item.get('createdBy').toJSON().username : '无'
-          obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
-          return obj
+      const user = this.currentUser()
+      if (user.username !== 'admin') {
+        const createdBy = AV.Object.createWithoutData('_User', user.objectId)
+        carousel.equalTo('createdBy', createdBy)
+      }
+      carousel.include(['createdBy']).limit(this.pageSize).find()
+        .then((res) => {
+          this.carouselList = _.map(res, (item) => {
+            const obj = item.toJSON()
+            obj.createdByName = obj.createdBy ? item.get('createdBy').toJSON().username : '无'
+            obj.formatUpdatedAt = obj.updatedAt ? this.dateFormat(obj.updatedAt, 'L') : '无'
+            return obj
+          })
         })
-      })
+        .catch((err) => {
+          console.log('err', err)
+          this.$Message.error('出错啦')
+        })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],
   }

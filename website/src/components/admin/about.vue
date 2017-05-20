@@ -11,7 +11,7 @@
             <figure v-for="(thumbnail, index) in thumbnails" class="l pos-rel">
               <img :src="`${thumbnail}?imageView2/1/w/100/h/100/interlace/0/q/100`"
                    class="rounded bd-blue m-r-5"/>
-              <Icon type="close-circled" @click="deleteFile(index)" class="btn_remove"></Icon>
+              <Icon type="close-circled" @click.native="deleteFile(index)" class="btn_remove"></Icon>
             </figure>
           </div>
         </div>
@@ -79,6 +79,7 @@
           {
             title: '作者',
             key: 'createdByName',
+            sortable: true,
           },
           {
             title: '最后更新',
@@ -110,6 +111,7 @@
           title: '',
           myPage: '',
         }
+        this.thumbnails = []
       },
       uploadComplete(status, result) {
         if (status === 200) {
@@ -141,7 +143,6 @@
             const about = this.queryAbout()
             about.include(['createdBy']).get(res.id).then((getRes) => {
               const obj = getRes.toJSON()
-              console.log('修改', obj)
               this.$Message.success('操作成功')
               this.editing = false
               this.saving = false
@@ -172,7 +173,6 @@
             const about = this.queryAbout()
             about.include(['createdBy']).get(res.id).then((getRes) => {
               const obj = getRes.toJSON()
-              console.log('新增', obj)
               this.editing = false
               this.saving = false
               obj.createdByName = getRes.get('createdBy').toJSON().username
@@ -190,6 +190,11 @@
     },
     created() {
       const abouts = this.queryAbout()
+      const user = this.currentUser()
+      if (user.username !== 'admin') {
+        const createdBy = AV.Object.createWithoutData('_User', user.objectId)
+        abouts.equalTo('createdBy', createdBy)
+      }
       abouts.include(['createdBy']).descending('updatedAt').limit(this.pageSize).find()
         .then((res) => {
           this.abouts = _.map(res, (item) => {
@@ -201,6 +206,7 @@
         })
         .catch((err) => {
           console.log('err', err)
+          this.$Message.error('出错啦')
         })
     },
     mixins: [FnMixins, ModelMixins, FiltersMixins],
